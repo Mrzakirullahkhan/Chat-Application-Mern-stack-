@@ -1,25 +1,29 @@
 
 import './App.css';
-import {createBrowserRouter} from "react-router-dom";
+import {createBrowserRouter,RouterProvider} from "react-router-dom";
+import Home from './components/HomePage';
+import Login from './components/Login';
+import SignUp from "./components/SignUp"
+
 
 const router = createBrowserRouter([
   {
     path:"/",
-    element:"<HomePage/>"
+    element:<Home/>
   },
   {
     path:"/registure",
-    element:"<SignUp/>"
+    element:<SignUp/>
   },
   {
     path:"/login",
-    element:"<Login/>"
+    element:<Login/>
   },
 ])
 function App() {
   return (
-    <div className="App">
-      zakir khan chat application 
+    <div className="p-4 h-screen flex items-center justify-center">
+      <RouterProvider router={router}/>
       
     </div>
   );
