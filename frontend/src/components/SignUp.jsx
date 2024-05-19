@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {Link} from "react-router-dom"
+import axios from 'axios'
 
 function SignUp() {
   const [user, setUser]=useState({
@@ -9,9 +10,30 @@ function SignUp() {
     confirmPassword:"",
     gender:""
   })
-  const onSubmitHandler =(e)=>{
+  const onSubmitHandler =async(e)=>{
     e.preventDefault()
-    console.log(user)
+    try {
+      const res = await axios.post(`http://localhost:8000/api/v1/user/registure`,user,{
+        headers:{
+          "Content-Type":"application/json"
+        },
+        withCredentials:true
+      });
+      console.log(res)
+    } catch (error) {
+      console.log(error) 
+   }
+    // setUser({
+    //   fullName:"",
+    //   username:"",
+    //   password:"",
+    //   confirmPassword:"",
+    //   gender:""
+    // })
+  }
+
+  const handlecheck = (gender) =>{
+      setUser({...user, gender})
   }
 
   return (
@@ -66,11 +88,18 @@ function SignUp() {
           <div className='flex items-center my-4'>
             <div className="flex items-center">
               <p>Male</p>
-            <input type="checkbox" defaultChecked className="checkbox mx-2" />
+            <input type="checkbox" 
+            checked={user.gender==="male"}
+            onChange={()=>handlecheck("male")}
+            defaultChecked 
+            className="checkbox mx-2" />
             </div>
             <div className="flex items-center">
               <p>Female</p>
-            <input type="checkbox" defaultChecked className="checkbox mx-2" />
+            <input type="checkbox"
+                 checked={user.gender==="female"}
+                 onChange={()=>handlecheck("female")}
+             defaultChecked className="checkbox mx-2" />
             </div>
           </div>
               <p className='text-center'>Already have an account ? <Link to="/login"> Login</Link></p>
