@@ -6,11 +6,11 @@ import jwt from "jsonwebtoken"
 
 export const registure = async(req,res)=>{
     try {
-        const {fullName, username, password, conformPassword, gender}= req.body;
-        if(!fullName || !username || !password || !conformPassword || !gender){
+        const {fullName, username, password, confirmPassword, gender}= req.body;
+        if(!fullName || !username || !password || !confirmPassword || !gender){
             return res.status(400).json({message:"All fields are required"})
         }
-        if(password!==conformPassword){
+        if(password!==confirmPassword){
             return res.status(400).json({message:"password do not match"})
 
         }

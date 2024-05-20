@@ -1,115 +1,153 @@
-import React, { useState } from 'react'
-import {Link} from "react-router-dom"
-import axios from 'axios'
+import axios from "axios";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 
-function SignUp() {
-  const [user, setUser]=useState({
-    fullName:"",
-    username:"",
-    password:"",
-    confirmPassword:"",
-    gender:""
-  })
-  const onSubmitHandler =async(e)=>{
-    e.preventDefault()
+const Signup = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
+    fullName: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+  });
+
+  const handleCheckbox = (gender) => {
+    setUser({ ...user, gender });
+  };
+
+  const submitHandler = async (e) => {
     try {
-      const res = await axios.post(`http://localhost:8000/api/v1/user/registure`,user,{
-        headers:{
-          "Content-Type":"application/json"
-        },
-        withCredentials:true
+      e.preventDefault();
+      const res = await axios.post(
+        `http://localhost:8000/api/v1/user/registure`,
+        user,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+        navigate("/login");
+        console.log(res.data)
+      }
+      setUser({
+        fullName: "",
+        username: "",
+        password: "",
+        confirmPassword: "",
+        gender: "",
       });
-      console.log(res)
     } catch (error) {
-      console.log(error) 
-   }
-    // setUser({
-    //   fullName:"",
-    //   username:"",
-    //   password:"",
-    //   confirmPassword:"",
-    //   gender:""
-    // })
-  }
-
-  const handlecheck = (gender) =>{
-      setUser({...user, gender})
-  }
+      toast.error(error.response.data.message);
+      console.log(error);
+    }
+  };
 
   return (
-    <div className='min-w-96 max-auto'>
-      <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
-        <h1 className="text-3xl font-bold text-center text-gray-300">SignUp</h1>
-        <form action="" onSubmit={onSubmitHandler}>
+    <div className="min-w-96 mx-auto ">
+      <div className="w-full p-6 rounded-lg shadow-md  bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
+        <h1 className="text-3xl font-bold text-center">Signup</h1>
+        <form onSubmit={submitHandler} action="">
           <div>
-            <label className='label p-2'>
+            <label className="label p-2">
               <span className="text-base label-text">Full Name</span>
             </label>
-            <input type="text"
-            value={user.fullName}
-            onChange={(e)=>setUser({...user,fullName:e.target.value})}
-             className='w-full input-bordered h-8 bg-white'
-             placeholder='name'
-             />
+            <input
+              value={user.fullName}
+              onChange={(e) => setUser({ ...user, fullName: e.target.value })}
+              type="text"
+              placeholder="Full Name"
+              className="w-full input input-bordered h-10"
+            />
           </div>
+
           <div>
-            <label className='label p-2'>
-              <span className="text-base label-text">User Name</span>
+            <label className="label p-2">
+              <span className="text-base label-text">Username</span>
             </label>
-            <input type="text"
-            value={user.username}
-            onChange={(e)=>setUser({...user,username:e.target.value})}
-             className='w-full input-bordered h-8 bg-white'
-             placeholder='Userame'
-             />
+            <input
+              value={user.username}
+              onChange={(e) => setUser({ ...user, username: e.target.value })}
+              type="text"
+              placeholder="Username"
+              className="w-full input input-bordered h-10"
+            />
           </div>
+
           <div>
-            <label className='label p-2'>
-              <span className="text-base label-text">Password</span>
+            <label className="label p-2">
+              <span className="text-base label-text">Password </span>
             </label>
-            <input type="password"
-            value={user.password}
-            onChange={(e)=>setUser({...user,password:e.target.value})}
-             className='w-full input-bordered h-8 bg-white'
-             placeholder='password'
-             />
+            <input
+              value={user.password}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              type="password"
+              placeholder="Password"
+              className="w-full input input-bordered h-10"
+            />
           </div>
+
           <div>
-            <label className='label p-2'>
-              <span className="text-base label-text">Conform Password</span>
+            <label className="label p-2">
+              <span className="text-base label-text">Confirm Password</span>
             </label>
-            <input type="password"
-            value={user.confirmPassword}
-            onChange={(e)=>setUser({...user,confirmPassword:e.target.value})}
-             className='w-full input-bordered h-8  bg-white'
-             placeholder='Conform password'
-             />
+            <input
+              value={user.confirmPassword}
+              onChange={(e) =>
+                setUser({ ...user, confirmPassword: e.target.value })
+              }
+              type="password"
+              placeholder="Confirm Password"
+              className="w-full input input-bordered h-10"
+            />
           </div>
-          <div className='flex items-center my-4'>
+
+          <div className="flex pt-4">
             <div className="flex items-center">
               <p>Male</p>
-            <input type="checkbox" 
-            checked={user.gender==="male"}
-            onChange={()=>handlecheck("male")}
-            defaultChecked 
-            className="checkbox mx-2" />
+              <input
+                checked={user.gender === "male"}
+                onChange={() => handleCheckbox("male")}
+                type="checkbox"
+                defaultChecked
+                className="checkbox checkbox-sm mx-2"
+              />
             </div>
             <div className="flex items-center">
               <p>Female</p>
-            <input type="checkbox"
-                 checked={user.gender==="female"}
-                 onChange={()=>handlecheck("female")}
-             defaultChecked className="checkbox mx-2" />
+              <input
+                checked={user.gender === "female"}
+                onChange={() => handleCheckbox("female")}
+                type="checkbox"
+                defaultChecked
+                className="checkbox checkbox-sm mx-2"
+              />
             </div>
           </div>
-              <p className='text-center'>Already have an account ? <Link to="/login"> Login</Link></p>
+          <p className="w-ful text-center">
+            Already have an account?
+            <Link className="btn btn-link" to={"/login"}>
+              Login
+            </Link>
+          </p>
+
           <div>
-            <button type='submit' className='btn btn-block btn-sm mt-2 border border-slate-700'>SignUp</button>
+            <button
+              type="submit"
+              className="btn btn-block btn-sm border border-slate-700"
+            >
+              Signup
+            </button>
           </div>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default Signup;
