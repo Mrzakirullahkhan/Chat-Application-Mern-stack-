@@ -1,11 +1,10 @@
 import React from 'react'
-import SendMessage from './SendMessage'
 
-function MessageContent() {
+function OtherUser() {
   return (
-    <div className='md:min-w-[550px] flex flex-col'>
+    <div>
         
-    <div className='flex gap-2 items-center bg-zinc-800 text-white px-4 mb-2'>
+    <div className='flex gap-2 items-center hover:bg-zinc-200 rounded-sm p-2 cursor-pointer'>
         <div className='avatar online'>
             <div className='w-12 rounded-full'>
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3yvK-XQru_N4podiBvs20BfJC50D7Betaz235_RcVDQ&s" alt="user-profile" />
@@ -17,9 +16,10 @@ function MessageContent() {
             </div>
         </div>
     </div>
-    <SendMessage/>
+   
+<div className="divider my-0 py-0"></div>
 </div>
   )
 }
 
-export default MessageContent
+export default OtherUser
