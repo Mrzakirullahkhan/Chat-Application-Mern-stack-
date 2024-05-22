@@ -1,5 +1,6 @@
 import React from 'react'
 import SendMessage from './SendMessage'
+import Messages from './Messages'
 
 function MessageContent() {
   return (
@@ -17,6 +18,7 @@ function MessageContent() {
             </div>
         </div>
     </div>
+    <Messages/>
     <SendMessage/>
 </div>
   )
