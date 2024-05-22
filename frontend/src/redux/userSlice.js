@@ -11,4 +11,5 @@ const userSlice = createSlice({
         }
     }
 })
-export 
+export const {setAuthUser} = userSlice.actions
+export default userSlice.reducer;
