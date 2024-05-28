@@ -90,7 +90,7 @@ export const logout = (req,res)=>{
     }
 }
 
-// other user ko show krwane k liye 
+// other user ko show krwane k liye  
 export const getOtherUsers = async (req,res)=>{
     try {
         const loggedInUserId = req.id;
