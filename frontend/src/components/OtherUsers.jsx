@@ -10,13 +10,13 @@ function OtherUsers() {
 
     // Accessing OtherUsers from Redux store
     const otherUsers = useSelector((store) => store.user.otherUsers);
-    console.log(otherUsers)
+    // console.log(otherUsers)
 
     // Early return if OtherUsers is not yet fetched or empty
     if (!otherUsers) return; // Early return in react
 
     return (
-        <div className='overflow-auto'>
+        <div className='overflow-auto flex-1'>
             {
                 otherUsers.map((user) => {
                     return (
