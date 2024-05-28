@@ -4,8 +4,7 @@ import dotenv from "dotenv"
 import connectDB from "./config/database.js";
 import userRoute from "./routes/userRoute.js"
 import cookieParser from "cookie-parser";
-// import messageRoute from "./routes/messageRoute.js";
-// import messageRoute from "./routes/messageRoute.js"
+import messageRoute from "./routes/messageRoute.js"
 import cors from "cors"
 
 dotenv.config({})
@@ -30,8 +29,7 @@ app.use(cors(corsOption))
 
 // routes
 app.use("/api/v1/user",userRoute)
-// app.use("/api/v1/message", messageRoute);
-// app.use("/api/v1/message",messageRoute)
+app.use("/api/v1/message",messageRoute)
 
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, ()=>{
